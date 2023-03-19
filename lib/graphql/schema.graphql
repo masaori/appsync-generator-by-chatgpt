@@ -1,0 +1,219 @@
+type Query {
+  user(id: ID!): UserResult
+  users(limit: Int, nextToken: String): UserConnectionResult
+
+  task(id: ID!): TaskResult
+  tasks(limit: Int, nextToken: String): TaskConnectionResult
+
+  assignment(id: ID!): AssignmentResult
+  assignments(limit: Int, nextToken: String): AssignmentConnectionResult
+
+  organization(id: ID!): OrganizationResult
+  organizations(limit: Int, nextToken: String): OrganizationConnectionResult
+
+  group(id: ID!): GroupResult
+  groups(limit: Int, nextToken: String): GroupConnectionResult
+
+  belonging(id: ID!): BelongingResult
+  belongings(limit: Int, nextToken: String): BelongingConnectionResult
+}
+type Mutation {
+  createUser(input: CreateUserInput!): UserResult!
+  updateUser(id: ID!, input: UpdateUserInput!): UserResult!
+  deleteUser(id: ID!): UserResult!
+
+  createTask(input: CreateTaskInput!): TaskResult!
+  updateTask(id: ID!, input: UpdateTaskInput!): TaskResult!
+  deleteTask(id: ID!): TaskResult!
+
+  createAssignment(input: CreateAssignmentInput!): AssignmentResult!
+  updateAssignment(id: ID!, input: UpdateAssignmentInput!): AssignmentResult!
+  deleteAssignment(id: ID!): AssignmentResult!
+
+  createOrganization(input: CreateOrganizationInput!): OrganizationResult!
+  updateOrganization(
+    id: ID!
+    input: UpdateOrganizationInput!
+  ): OrganizationResult!
+  deleteOrganization(id: ID!): OrganizationResult!
+
+  createGroup(input: CreateGroupInput!): GroupResult!
+  updateGroup(id: ID!, input: UpdateGroupInput!): GroupResult!
+  deleteGroup(id: ID!): GroupResult!
+
+  createBelonging(input: CreateBelongingInput!): BelongingResult!
+  updateBelonging(id: ID!, input: UpdateBelongingInput!): BelongingResult!
+  deleteBelonging(id: ID!): BelongingResult!
+}
+
+type User {
+  id: String!
+  name: String!
+  assignments: [Assignment!]!
+  belongings: [Belonging!]!
+}
+
+type Task {
+  id: String!
+  description: String!
+  assignments: [Assignment!]!
+}
+
+type Assignment {
+  id: String!
+  userId: String!
+  taskId: String!
+  user: User!
+  task: Task!
+}
+
+type Organization {
+  id: String!
+  name: String!
+  groups: [Group!]!
+}
+
+type Group {
+  id: String!
+  organizationId: String!
+  name: String!
+  organization: Organization!
+  belongings: [Belonging!]!
+}
+
+type Belonging {
+  id: String!
+  userId: String!
+  groupId: String!
+  user: User!
+  group: Group!
+}
+
+type PermissionError {
+  code: String!
+  message: String!
+}
+
+type UnkownRuntimeError {
+  code: String!
+  message: String!
+}
+
+type NotFoundError {
+  code: String!
+  message: String!
+}
+
+input CreateUserInput {
+  name: String!
+}
+
+input UpdateUserInput {
+  name: String!
+}
+
+input CreateTaskInput {
+  description: String!
+}
+
+input UpdateTaskInput {
+  description: String!
+}
+
+input CreateAssignmentInput {
+  userId: String!
+  taskId: String!
+}
+
+input UpdateAssignmentInput {
+  userId: String!
+  taskId: String!
+}
+
+input CreateOrganizationInput {
+  name: String!
+}
+
+input UpdateOrganizationInput {
+  name: String!
+}
+
+input CreateGroupInput {
+  organizationId: String!
+  name: String!
+}
+
+input UpdateGroupInput {
+  organizationId: String!
+  name: String!
+}
+
+input CreateBelongingInput {
+  userId: String!
+  groupId: String!
+}
+
+input UpdateBelongingInput {
+  userId: String!
+  groupId: String!
+}
+
+union UserResult = User | PermissionError | UnkownRuntimeError | NotFoundError
+
+type UserConnectionResult {
+  items: [UserResult]
+  nextToken: String
+  totalCount: Int
+}
+
+union TaskResult = Task | PermissionError | UnkownRuntimeError | NotFoundError
+
+type TaskConnectionResult {
+  items: [TaskResult]
+  nextToken: String
+  totalCount: Int
+}
+
+union AssignmentResult =
+    Assignment
+  | PermissionError
+  | UnkownRuntimeError
+  | NotFoundError
+
+type AssignmentConnectionResult {
+  items: [AssignmentResult]
+  nextToken: String
+  totalCount: Int
+}
+
+union OrganizationResult =
+    Organization
+  | PermissionError
+  | UnkownRuntimeError
+  | NotFoundError
+
+type OrganizationConnectionResult {
+  items: [OrganizationResult]
+  nextToken: String
+  totalCount: Int
+}
+
+union GroupResult = Group | PermissionError | UnkownRuntimeError | NotFoundError
+
+type GroupConnectionResult {
+  items: [GroupResult]
+  nextToken: String
+  totalCount: Int
+}
+
+union BelongingResult =
+    Belonging
+  | PermissionError
+  | UnkownRuntimeError
+  | NotFoundError
+
+type BelongingConnectionResult {
+  items: [BelongingResult]
+  nextToken: String
+  totalCount: Int
+}

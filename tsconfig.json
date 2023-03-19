@@ -1,0 +1,23 @@
+{
+  "extends": "@tsconfig/node14",
+  "include": ["aws", "local"],
+  "compilerOptions": {
+    "outDir": "./build",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "lib": ["es2018"],
+    "target": "es2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "esModuleInterop": true
+  },
+  "exclude": [
+    "node_modules",
+    "cdk.out",
+    "aws/services/**",
+    "local/ref_oz_movie/ref_oz_movie_usa_assets"
+  ]
+}

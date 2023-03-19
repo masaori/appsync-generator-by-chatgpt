@@ -1,0 +1,24 @@
+# CDK output directories
+cdk.out
+cdk.context.json
+
+# Node.js dependencies
+node_modules
+
+# Build output directories
+dist
+
+# TypeScript configuration
+tsconfig.tsbuildinfo
+*.js.map
+*.d.ts
+
+# IDE files
+.idea
+*.swp
+*.swo
+*.swn
+
+# Operating System files
+.DS_Store
+Thumbs.db
